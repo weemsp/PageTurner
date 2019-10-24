@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <title>Beyond Reality Face - BRFv4 - HTML5/Javascript - minimal image example</title>
+
+  <style>
+    html, body { width: 100%; height: 100%; background-color: #ffffff; margin: 0; padding: 0; overflow: hidden; }
+  </style>
+</head>
+
+<body>
+
+<img    id="_image" src="assets/brfv4_women_young.jpg" style="display: none;"/>
+<canvas id="_imageData"></canvas>
+
+<script src="js/utils/BRFv4Stats.js"></script>
+<script src="js/BRFv4DemoMinimalImage.js"></script>
+
+<script>
+
+  // BRFv4DemoMinimal.js defines:
+  // var handleTrackingResults = function(brfv4, faces, imageDataCtx)
+  // var onInitBRFv4 = function(brfv4)
+  // Here we overwrite them. The initialization code for BRFv4 should always be similar,
+  // that's why we put it into its own file.
+
+  var _brfManager         = null;
+  var _resolution         = null;
+
+  onInitBRFv4 = function(
+    brfManager,     // api
+    resolution
+  ) {
+
+    console.log("onInitBRFv4", brfManager);
+
+    _brfManager = brfManager;
+    _resolution = resolution;
+
+    brfManager.setNumFacesToTrack(8); // up to eight faces
+
+    // Relax starting conditions to eventually find more faces.
+
+    var maxFaceSize = resolution.height;
+
+    if(resolution.width < resolution.height) {
+      maxFaceSize = resolution.width;
+    }
+
+    brfManager.setFaceDetectionParams(    maxFaceSize * 0.10, maxFaceSize * 0.50, 12, 8);
+    brfManager.setFaceTrackingStartParams(maxFaceSize * 0.05, maxFaceSize * 1.00, 32, 35, 32);
+    brfManager.setFaceTrackingResetParams(maxFaceSize * 0.00, maxFaceSize * 1.00, 40, 55, 32);
+  };
+
+  handleTrackingResults = function(
+    brfv4,          // namespace
+    faces,          // tracked faces
+    imageDataCtx    // canvas context to draw into
+  ) {
+
+    // var allRects    = _brfManager.getAllDetectedFaces();
+    var mergedRects = _brfManager.getMergedDetectedFaces();
+
+    // for(var i = 0; i < allRects.length; i++) {
+    //
+    //   var rect = allRects[i];
+    //
+    //   console.log(rect);
+    //
+    //   imageDataCtx.strokeStyle = "#00a0ff";
+    //   imageDataCtx.rect(rect.x,rect.y,rect.width,rect.height);
+    //   imageDataCtx.stroke();
+    // }
+
+    for(var i = 0; i < mergedRects.length; i++) {
+
+      var rect = mergedRects[i];
+
+      imageDataCtx.strokeStyle = "#ffd200";
+      imageDataCtx.rect(rect.x,rect.y,rect.width,rect.height);
+      imageDataCtx.stroke();
+    }
+
+    for(var i = 0; i < faces.length; i++) {
+
+      var face = faces[i];
+
+      if(face.state === brfv4.BRFState.FACE_TRACKING_START ||
+        face.state === brfv4.BRFState.FACE_TRACKING) {
+
+        imageDataCtx.strokeStyle = "#00a0ff";
+
+        for(var k = 0; k < face.vertices.length; k += 2) {
+          imageDataCtx.beginPath();
+          imageDataCtx.arc(face.vertices[k], face.vertices[k + 1], 2, 0, 2 * Math.PI);
+          imageDataCtx.stroke();
+        }
+      }
+    }
+  };
+
+  onResize = function () {
+
+    // fill whole browser
+
+    var imageData = document.getElementById("_imageData");
+
+    var ww = window.innerWidth;
+    var wh = window.innerHeight;
+
+    var s = wh / imageData.height;
+
+    if(imageData.width * s < ww) {
+      s = ww / imageData.width;
+    }
+
+    var iw = imageData.width * s;
+    var ih = imageData.height * s;
+    var ix = (ww - iw) * 0.5;
+    var iy = (wh - ih) * 0.5;
+
+    imageData.style.transformOrigin = "0% 0%";
+    imageData.style.transform = "matrix("+s+", 0, 0, "+s+", "+ix+", "+iy+")";
+  };
+
+</script>
+
+</body>
+
+</html>
