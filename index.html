@@ -5,16 +5,61 @@
 		<meta content="utf-8" http-equiv="encoding">
 		<title>PageTurner</title>
 		<!--<link rel="shortcut icon" type="image/png" href="favicon.png">-->
-		<style>
-		</style>
-		<!--<script type="text/javascript" src="webgazer.js"></script>-->
-		<script type="text/javascript" src="main.js"></script>
-		</head>
-	<body>
-		<iframe id="BRFv4" title="BRFv4" src="brfv4_javascript_examples/minimalWebcam.html" width="600" height="450"></iframe>
+
+		<link rel="stylesheet" type="text/css" href="css/brfv4_examples_theme.css">
+		<title>Beyond Reality Face - BRFv4 - HTML5/Javascript face tracking</title>
 		
 		<script>
-			const ONLINE = false;
+			window.stupidScopeEscaper = {};
+		</script>
+		
+		<script src="js/libs/createjs/preloadjs.min.js"></script>
+		<script src="js/BRFv4Demo.js"></script>
+		<script>
+			window.onload = brfv4Example.start; //see js/BRFv4Demo.js
+		</script>
+
+		<!--<script type="text/javascript" src="webgazer.js"></script>-->
+		<script type="text/javascript" src="main.js"></script>
+		
+		<style>
+			#pagenumber {
+				font-size : 50px;
+			}
+		</style>
+		</head>
+	<body>
+		
+		<div id="_wrapper">
+
+			<div id="_content">
+				<video  id="_webcam" playsinline></video>
+				<canvas id="_imageData"></canvas>
+				<canvas id="_faceSub"></canvas>
+				<canvas id="_t3d"></canvas>
+				<canvas id="_f3d"></canvas>
+				<canvas id="_drawing"></canvas>
+				<div id="_stats"></div>
+				<div id="_progressBar"></div>
+				<a href="http://www.tastenkunst.com" target="_blank">
+					<img id="_brfv4_logo" src="assets/brfv4_logo.png" alt="BRFv4 Logo"/>
+				</a>
+			</div>
+
+			<!--<div id="_subline"></div>
+			<div id="_highlight"><pre><code class="javascript" id="_gist"></code></pre></div>-->
+		</div>
+
+		<div id="_settingsRight" hidden></div>
+
+		<div id="book">
+			<div id="pagenumber">1</div>
+		</div>
+
+		</body>
+		<!--<iframe id="BRFv4" title="BRFv4" src="brfv4_javascript_examples/minimalWebcam.html" width="600" height="450"></iframe>-->
+		
+		<script>
 			begin();
 		</script>
 	</body>

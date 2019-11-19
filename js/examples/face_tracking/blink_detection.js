@@ -1,6 +1,9 @@
+//console.log("bup")
 (function exampleCode() {
 	"use strict";
-
+	
+	setBlinking = true;
+	
 	brfv4Example.initCurrentExample = function(brfManager, resolution) {
 		brfManager.init(resolution, resolution, brfv4Example.appId);
 	};
@@ -69,10 +72,15 @@
 				if((blinkRatio > 12 && (yLE > 0.4 || yRE > 0.4))) {
 					console.log("blink " + blinkRatio.toFixed(2) + " " + yLE.toFixed(2) + " " +
 						yRE.toFixed(2) + " " + yN.toFixed(2));
-
+					var dif = yRE - yLE
+					console.log(dif); //TEST
+					if (dif < -.4)
+						pageLeft();
+					else if (dif > .4)
+						pageRight();
+					
 					blink();
 				}
-
 				// Let the color of the shape show whether you blinked.
 
 				var color = 0x00a0ff;

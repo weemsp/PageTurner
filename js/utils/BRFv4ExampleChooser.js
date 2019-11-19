@@ -49,7 +49,8 @@
 
 	var _isFirstSelect = true;
 	function onExampleChosen(data) {
-
+		console.log(data);
+		
 		if(_isFirstSelect) return;
 
 		var url = urlMap[data.value];
@@ -66,7 +67,9 @@
 			}
 		}
 	}
-
+	
+	stupidScopeEscaper.onExampleChosen = onExampleChosen;
+	
 	if(!brfv4Example.gui.exampleChooser) {
 
 		QuickSettings.useExtStyleSheet();
@@ -78,6 +81,7 @@
 			.addDropDown("_example", labels, onExampleChosen)
 			.hideTitle("_example")
 			.setValuesFromJSON({ "_example": 6}); // "basic - face tracking - track single face"
+			//.setValuesFromJSON({ "_example": 20}); // "advanced - face tracking - blink detection"
 
 		_isFirstSelect = false;
 	}
