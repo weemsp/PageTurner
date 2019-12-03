@@ -21,10 +21,20 @@
 
 		<!--<script type="text/javascript" src="webgazer.js"></script>-->
 		<script type="text/javascript" src="main.js"></script>
+		<script type="text/javascript" src="books/lipsum.js"></script>
 		
 		<style>
 			#pagenumber {
+				position : absolute;
+				left : 0;
+				top : 0;
 				font-size : 50px;
+			}
+			#Book {
+				float : rigth;
+				overflow : scroll;
+				width : 350px;
+				height : 800px;
 			}
 		</style>
 		</head>
@@ -39,9 +49,9 @@
 				<canvas id="_t3d"></canvas>
 				<canvas id="_f3d"></canvas>
 				<canvas id="_drawing"></canvas>
-				<div id="_stats"></div>
-				<div id="_progressBar"></div>
-				<a href="http://www.tastenkunst.com" target="_blank">
+				<div id="_stats" hidden></div>
+				<div id="_progressBar" hidden></div>
+				<a href="http://www.tastenkunst.com" target="_blank" hidden>
 					<img id="_brfv4_logo" src="assets/brfv4_logo.png" alt="BRFv4 Logo"/>
 				</a>
 			</div>
@@ -52,8 +62,9 @@
 
 		<div id="_settingsRight" hidden></div>
 
-		<div id="book">
+		<div id="Book">
 			<div id="pagenumber">1</div>
+			<p id="TextHere"></div>
 		</div>
 
 		</body>
